@@ -1,8 +1,9 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import { Component } from 'react';
 
 class Cell extends Component {
+    // this got a props known as life, which is boolean
+    // we need to get a click functions passed down from Game to Board and come to this
     constructor(props) {
         super(props);
         this.state = {
@@ -13,14 +14,14 @@ class Cell extends Component {
     render() {
         let c;
         if(this.state.life) {
-            c = <p>ALIVE</p>;
+            c = <div className="alive"></div>
         } else {
-            c = <p>DEad</p>;
+            c = <div className="dead"></div>
         }
         return (
-            <div>
+            <>
                 {c}
-            </div>
+            </>
         )
     }
 }

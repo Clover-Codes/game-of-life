@@ -1,50 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Cell from './Cell';
+import Board from './Board';
 
-  function Square(props) {
-    return (
-      <button className = 'square'
-              onClick = {props.onClick}>
-        {props.value}
-      </button>
-    )
-  }
-  
-  class Board extends React.Component {
-
-    renderSquare() {
-      return (
-        <Square/>
-      );
-    }
-  
-    render() {
-      return (
-       <div>
-         <p>HII!!!!</p>
-         {this.renderSquare()}
-       </div>
-      );
-    }
-  }
-  
   class Game extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {};
-    }
-
-    handleClick(i) {
+      this.state = {
+        // current: Array[10][10].fill(true),
+        // CHECKPOINT: how do i make a 2d array in state?
+        ongoing: true,
+      };
     }
 
     render() {
       return (
         <div>
         <p>HI!</p>
-        <Cell life={false}/>
-        <Board/>
         </div>
       );
     }
