@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Board from './Board';
-// import { useEffect } from 'react';
 
   class Game extends React.Component {
     constructor(props) {
       super(props);
-      let size = 40;
+      let size = 20;
       let board = new Array(size);
 
       for(let i=0; i<size; i++) {
@@ -17,6 +16,7 @@ import Board from './Board';
         current: board,
         ongoing: false,
         size: size,
+        gen: 0,
       };
     }
 
@@ -67,6 +67,7 @@ import Board from './Board';
 
       // this next gen below could be written in a better way
       let next = new Array(this.state.size);
+      this.setState({gen: this.state.gen+1});
 
       for(let i=0; i<this.state.size; i++) {
         next[i] = new Array(this.state.size).fill(false);
@@ -96,6 +97,17 @@ import Board from './Board';
       }
 
       this.setState({current: next});
+      this.setState({gen: 0});
+    }
+
+    componentDidMount = () => {
+      console.log(this.state.ongoing);
+      // setInterval(this.gameUpdation, 1000);
+    }
+
+    componentWillUnmount = () => {
+      console.log('huh');
+      // clearInterval(this.gameUpdation);
     }
 
     render() {
@@ -105,8 +117,6 @@ import Board from './Board';
           <h1>Game of Life</h1>
           <div className="main-game">
             <Board size={this.state.size} board={this.state.current} onClick = {(i, j) => this.handleClick(i, j)}/>
-            {/* <p>HELL</p> */}
-          {/* {console.log("hi")}; */}
             <button className='game toggle'
               onClick={() => this.gametoggle()}
             >
@@ -117,6 +127,7 @@ import Board from './Board';
             >
             Reset
             </button>
+            <p>Generations: {this.state.gen}</p>
           </div>
         </div>
       );
