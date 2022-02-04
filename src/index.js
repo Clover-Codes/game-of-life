@@ -20,6 +20,14 @@ import Board from './Board';
       };
     }
 
+    componentDidMount = () => {
+      setInterval(this.gameUpdation, 300);
+      // clearInterval(k);
+      // this runs but i don't remove this before unmounting
+    }
+
+
+
     handleClick(i, j) {
       // let toggle = this.state.current;
       // toggle[i][j] = !this.state.current[i][j];
@@ -34,17 +42,6 @@ import Board from './Board';
     gametoggle() {
       // this.setState({ongoing: !this.state.ongoing})
       this.setState((state) => {
-        // console.log('heck yeah');//
-        let k;
-        if(state.ongoing===false) { // game is about to start
-          console.log('starting game');
-          console.log(this.gameUpdation);
-          k = setInterval(this.gameUpdation, 400);
-          console.log('why');
-        } else { // game is ending/pausing
-          clearInterval(k);
-          console.log('ending/paused game');
-        }
         return {ongoing: !(state.ongoing)}
       });
       // this.gameUpdation();
@@ -82,6 +79,10 @@ import Board from './Board';
     }
 
     gameUpdation = () => {
+      console.log(`the ongoing rn is ${this.state.ongoing}`);
+      if(this.state.ongoing===false) {
+        return;
+      }
       this.setState((state) => {
         return {gen: state.gen + 1}
       });
@@ -147,8 +148,8 @@ import Board from './Board';
             </button>
             <p>Generations: {this.state.gen}</p>
           </div>
-          {/* {console.log(this.state.ongoing)} */}
-          {/* {setInterval(this.updator, 1000)} */}
+          {/* don't write any functions here, because they will be called whenever this whole this is rerendered */}
+          {/* {console.log('hi')} */}
         </div>
       );
     }
