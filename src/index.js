@@ -21,14 +21,33 @@ import Board from './Board';
     }
 
     handleClick(i, j) {
-      let toggle = this.state.current;
-      toggle[i][j] = !this.state.current[i][j];
-      this.setState({current: toggle})
+      // let toggle = this.state.current;
+      // toggle[i][j] = !this.state.current[i][j];
+      // this.setState({current: toggle})
+      this.setState((state) => {
+        let toggle = state.current;
+        toggle[i][j] = !(state.current[i][j]);
+        return {current: toggle}
+      });
     }
 
     gametoggle() {
-      this.setState({ongoing: !this.state.ongoing})
-      this.gameUpdation();
+      // this.setState({ongoing: !this.state.ongoing})
+      this.setState((state) => {
+        // console.log('heck yeah');//
+        let k;
+        if(state.ongoing===false) { // game is about to start
+          console.log('starting game');
+          console.log(this.gameUpdation);
+          k = setInterval(this.gameUpdation, 400);
+          console.log('why');
+        } else { // game is ending/pausing
+          clearInterval(k);
+          console.log('ending/paused game');
+        }
+        return {ongoing: !(state.ongoing)}
+      });
+      // this.gameUpdation();
     }
     
     lives(x, y, size) {
@@ -62,53 +81,52 @@ import Board from './Board';
       }
     }
 
-    gameUpdation() {
-      // let next = this.state.current.slice();
-
-      // this next gen below could be written in a better way
-      let next = new Array(this.state.size);
-      this.setState({gen: this.state.gen+1});
-
-      for(let i=0; i<this.state.size; i++) {
-        next[i] = new Array(this.state.size).fill(false);
-      }
-
-      let size = this.state.size;
-      for(let i=1; i<size-1; i++) {
-        for(let j=1; j<size-1; j++) {
-          next[i][j] = this.lives(i, j, size);
-          // if(next[i][j]) {
-          //   console.log(`game: ${this.state.ongoing}    cell ${i}, ${j} became alive`);
-          // }
-        }
-      }
+    gameUpdation = () => {
+      this.setState((state) => {
+        return {gen: state.gen + 1}
+      });
       // console.table(this.state.current);// this shows an updated current when i haven't changes it yet
       // here, current somehow updates when i update next, 
       // i need them to be separate so i can get a new generations] all at once, not cell by cell
-      this.setState({current: next});
+      this.setState((state) => {
+        let next = new Array(state.size);
+        for(let i=0; i<state.size; i++) {
+          next[i] = new Array(state.size).fill(false);
+        }
+        for(let i=1; i<state.size-1; i++) {
+          for(let j=1; j<state.size-1; j++) {
+            next[i][j] = this.lives(i, j, state.size);
+          }
+        }
+        return {current: next}
+      });
     }
 
     gameReset() {
-      let next = this.state.current.slice();
-      for(let i=0; i<this.state.size; i++) {
-        for(let j=0; j<this.state.size; j++) {
-          next[i][j] = false;
+
+      // this.gametoggle();
+
+      // this.setState({current: next});
+      this.setState((state) => {
+        let next = new Array(state.size);
+        for(let i=0; i<state.size; i++) {
+          next[i] = new Array(state.size).fill(false);
         }
-      }
+        return {current: next}
+      });
 
-      this.setState({current: next});
-      this.setState({gen: 0});
+      this.setState(() => {
+        return {gen: 0}
+      });
+
+      this.setState(() => {
+        return {ongoing: false}
+      });
     }
 
-    componentDidMount = () => {
-      console.log(this.state.ongoing);
-      // setInterval(this.gameUpdation, 1000);
-    }
-
-    componentWillUnmount = () => {
-      console.log('huh');
-      // clearInterval(this.gameUpdation);
-    }
+    // updator(state) {
+    //   console.log(state.ongoing);
+    // }
 
     render() {
       let buttonText = this.state.ongoing? 'Stop' : 'Start';
@@ -129,6 +147,8 @@ import Board from './Board';
             </button>
             <p>Generations: {this.state.gen}</p>
           </div>
+          {/* {console.log(this.state.ongoing)} */}
+          {/* {setInterval(this.updator, 1000)} */}
         </div>
       );
     }
