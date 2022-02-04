@@ -6,9 +6,18 @@
   background: grey;
 }
 
+body {
+  display: flex;
+  justify-content: center;
+}
+
 .alive, .dead {
   margin: 0 2px;
   display: inline-block;
   height: 15px;
   width: 15px;
+}
+
+h1 {
+  text-align: center;
 }

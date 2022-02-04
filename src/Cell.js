@@ -1,5 +1,4 @@
 import React from 'react';
-import { Component } from 'react';
 
 // class Cell extends Component {
 //     // this got a props known as life, which is boolean
