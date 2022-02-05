@@ -1,3 +1,0 @@
-game (state: active or pause)
-	board(state: making the grid arrangement, props: rows, cols, an array of condition of all cells [boolean 2D])
-		cell (props: size, alive or dead)
