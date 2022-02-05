@@ -25,10 +25,18 @@ import React from 'react';
 //     }
 // }
 
+function check(mouse, fun) {
+  if(mouse) {
+    fun();
+  }
+}
+
 function Cell(props) {
     return (
       <div className = {props.life? 'alive':'dead'}
-              onClick = {props.onClick}>
+              onClick = {props.onClick}
+              onMouseOver = {()=>check(props.mouse, props.onClick)}
+              onDragStart={()=>false} onDrop={()=>false}>
         {props.value}
       </div>
     )

@@ -1,24 +1,103 @@
-.alive {
-  background: cyan;
+@font-face {
+  font-family: Chopsic;
+  src: url(Chopsic-K6Dp.ttf)
 }
 
-.dead {
-  background: grey;
+:root {
+  --dark-blue: #010A14;
+  --light-cyan: #89FDFF;
+  --alive: #ff003b;
+  --butt: #044F59;
+  --alive-shadow: #ff0f69;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap');
 
 body {
+  background: var(--dark-blue, black);
+  font-family: 'Roboto Mono', monospace;
+}
+
+h1 {
+  text-align: center;
+  font-family: Chopsic, monospace;
+  font-size: 2em;
+  color: var(--light-cyan, cyan);
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.main-game {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
   justify-content: center;
+  text-align: center;
+  align-items: center;
+  transform: scale(1.3);
 }
 
 .alive, .dead {
   margin: 0 2px;
   display: inline-block;
-  height: 15px;
-  width: 15px;
+  height: 17px;
+  width: 17px;
 }
 
-h1 {
-  text-align: center;
-  font-family: monospace;
+.alive {
+  background: var(--alive, yellow);
+  border: 1px solid var(--alive, yellow);
+  box-shadow: 0 0 4px var(--alive-shadow, yellow);
+  /* box-shadow: 0 0 3px white; */
+
+  /* box-shadow: 0 0 10px var(--light-cyan, cyan); */
+}
+
+.dead {
+  background: black;
+  border: 1px solid gray;
+}
+
+.game {
+  border: 3px solid var(--light-cyan, cyan);
+  border-radius: 15px;
+  background: white;
+  transition: all 100ms ease 0s;
+  color: var(--butt, cyan);
+  margin: 5px;
+  cursor: pointer;
+}
+
+.game:hover {
+  box-shadow: 0 0 10px var(--light-cyan, cyan);
+  transform: scale(0.95);
+}
+
+.stats {
+  color: var(--light-cyan, cyan);
+}
+
+p {
+  margin: 10px 20px;
+}
+
+@media screen and (max-width: 740px) {
+  /* looks good till 570px width */
+  .controls {
+    width: 50vw;
+    margin: 10px;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .game {
+    padding: 0px 15px;
+  }
 }

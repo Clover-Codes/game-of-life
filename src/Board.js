@@ -5,9 +5,17 @@ import Cell from './Cell';
 class Board extends Component {
     // this got the props state, which is a 2d array of all boolean values
     // and it got the props num, which is the row and column number
+
+    constructor(props) {
+      super(props);
+      this.state = {
+        mouse: false,
+      }
+    }
+
     renderCell(life, k, i, j) {
       return (
-        <Cell life={life} key={k} onClick = {() => this.props.onClick(i, j)}/>
+        <Cell life={life} key={k} onClick = {() => this.props.onClick(i, j)} mouse={this.state.mouse}/>
       );
     }
 
@@ -33,20 +41,33 @@ class Board extends Component {
         }
 
         return (
-            <div>
-                {/* <p>Hi hell wow</p> */}
+            <div className='board' 
+                 onMouseDown={(state)=>{
+                  //  console.log('down');
+                   this.setState(()=>{
+                     return{mouse: true}
+                   });
+                  //  console.log(this.state.mouse);
+                 }}
+                 onMouseUp={(state)=> {
+                   this.setState(()=>{
+                     return{mouse: false}
+                   });
+                  //  console.log(this.state.mouse);
+                 }}
+                 // bug: if you do mouse up outside the board, it doesn't make it false again
+                 >
                 {board}
-                {/* {console.log(this.props.board)} */}
             </div>
         )
     }
     render() {
       //note: variables exist in render, functions out of render
       return (
-       <div>
+       <>
        {/* <p>hi hello</p> */}
        {this.renderBoard()}
-       </div>
+       </>
       );
     }
   }

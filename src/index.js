@@ -21,7 +21,7 @@ import Board from './Board';
     }
 
     componentDidMount = () => {
-      setInterval(this.gameUpdation, 300);
+      setInterval(this.gameUpdation, 100); // 300ms
       // clearInterval(k);
       // this runs but i don't remove this before unmounting
     }
@@ -79,7 +79,7 @@ import Board from './Board';
     }
 
     gameUpdation = () => {
-      console.log(`the ongoing rn is ${this.state.ongoing}`);
+      // console.log(`the ongoing rn is ${this.state.ongoing}`);
       if(this.state.ongoing===false) {
         return;
       }
@@ -130,23 +130,25 @@ import Board from './Board';
     // }
 
     render() {
-      let buttonText = this.state.ongoing? 'Stop' : 'Start';
+      let buttonText = this.state.ongoing? 'Pause' : 'Start';
       return (
         <div>
           <h1>Game of Life</h1>
           <div className="main-game">
             <Board size={this.state.size} board={this.state.current} onClick = {(i, j) => this.handleClick(i, j)}/>
-            <button className='game toggle'
-              onClick={() => this.gametoggle()}
-            >
-            {buttonText}
-            </button>
-            <button className='game reset'
-              onClick={() => this.gameReset()}
-            >
-            Reset
-            </button>
-            <p>Generations: {this.state.gen}</p>
+            <div className="controls">
+              <div className='game toggle'
+                onClick={() => this.gametoggle()}
+              >
+              <p>{buttonText}</p>
+              </div>
+              <div className='game reset'
+                onClick={() => this.gameReset()}
+              >
+              <p>Reset</p>
+              </div>
+              <div className='stats gen'><p>Generations: {this.state.gen}</p></div>
+            </div>
           </div>
           {/* don't write any functions here, because they will be called whenever this whole this is rerendered */}
           {/* {console.log('hi')} */}
