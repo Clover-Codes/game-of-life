@@ -34,8 +34,8 @@ function check(mouse, fun) {
 function Cell(props) {
     return (
       <div className = {props.life? 'alive':'dead'}
-              onClick = {props.onClick}
               onMouseOver = {()=>check(props.mouse, props.onClick)}
+              onMouseDown = {props.onClick}
               onDragStart={()=>false} onDrop={()=>false}>
         {props.value}
       </div>

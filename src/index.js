@@ -6,16 +6,20 @@ import Board from './Board';
   class Game extends React.Component {
     constructor(props) {
       super(props);
-      let size = 20;
-      let board = new Array(size);
+      // let size = 20;
+      let row = 16;
+      let col = 55;
+      let board = new Array(row);
 
-      for(let i=0; i<size; i++) {
-        board[i] = new Array(size).fill(false);
+      for(let i=0; i<row; i++) {
+        board[i] = new Array(col).fill(false);
       }
       this.state = {
         current: board,
         ongoing: false,
-        size: size,
+        // size: size,
+        row: row,
+        col: col,
         gen: 0,
       };
     }
@@ -47,12 +51,12 @@ import Board from './Board';
       // this.gameUpdation();
     }
     
-    lives(x, y, size) {
+    lives(x, y, row, col) {
       let sum = 0;
       let board = this.state.current;
       for(let i=-1; i<2; i++) {
         for(let j=-1; j<2; j++) {
-          if(x+i>size || x+i<0 || y+j>size || y+j<0) {
+          if(x+i>row || x+i<0 || y+j>col || y+j<0) {
             sum+=0;
           } else {
             sum+=board[x+i][y+j];
@@ -90,13 +94,13 @@ import Board from './Board';
       // here, current somehow updates when i update next, 
       // i need them to be separate so i can get a new generations] all at once, not cell by cell
       this.setState((state) => {
-        let next = new Array(state.size);
-        for(let i=0; i<state.size; i++) {
-          next[i] = new Array(state.size).fill(false);
+        let next = new Array(state.row);
+        for(let i=0; i<state.row; i++) {
+          next[i] = new Array(state.col).fill(false);
         }
-        for(let i=1; i<state.size-1; i++) {
-          for(let j=1; j<state.size-1; j++) {
-            next[i][j] = this.lives(i, j, state.size);
+        for(let i=1; i<state.row-1; i++) {
+          for(let j=1; j<state.col-1; j++) {
+            next[i][j] = this.lives(i, j, state.row, state.col);
           }
         }
         return {current: next}
@@ -109,9 +113,9 @@ import Board from './Board';
 
       // this.setState({current: next});
       this.setState((state) => {
-        let next = new Array(state.size);
-        for(let i=0; i<state.size; i++) {
-          next[i] = new Array(state.size).fill(false);
+        let next = new Array(state.row);
+        for(let i=0; i<state.row; i++) {
+          next[i] = new Array(state.col).fill(false);
         }
         return {current: next}
       });
@@ -135,7 +139,7 @@ import Board from './Board';
         <div>
           <h1>Game of Life</h1>
           <div className="main-game">
-            <Board size={this.state.size} board={this.state.current} onClick = {(i, j) => this.handleClick(i, j)}/>
+            <Board row={this.state.row} col={this.state.col} board={this.state.current} onClick = {(i, j) => this.handleClick(i, j)}/>
             <div className="controls">
               <div className='game toggle'
                 onClick={() => this.gametoggle()}

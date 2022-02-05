@@ -20,7 +20,7 @@ class Board extends Component {
     }
 
     renderRow(i) { // the row number
-      let cols = this.props.size;
+      let cols = this.props.col;
       let row = new Array(cols);
       for(let j=0; j<cols; j++) {
         row[j] = this.renderCell(this.props.board[i][j], i*cols+j, i, j); // this makes an array of Cell components
@@ -33,7 +33,7 @@ class Board extends Component {
     }
 
     renderBoard() {
-        let rows = this.props.size;
+        let rows = this.props.row;
         // console.log(rows);//
         let board = new Array(rows); 
         for(let i=0; i<rows; i++) {
