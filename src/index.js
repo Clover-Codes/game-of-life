@@ -7,8 +7,8 @@ import Board from './Board';
     constructor(props) {
       super(props);
       // let size = 20;
-      let row = 10;
-      let col = 10;
+      let row = 16;
+      let col = 50;
       let board = new Array(row);
 
       for(let i=0; i<row; i++) {
@@ -28,7 +28,7 @@ import Board from './Board';
     }
 
     componentDidMount = () => {
-      setInterval(this.gameUpdation, 1000); // 300ms
+      setInterval(this.gameUpdation, 100); // 300ms
       // clearInterval(k);
       // this runs but i don't remove this before unmounting
     }
@@ -56,16 +56,10 @@ import Board from './Board';
     
     lives(x, y, row, col, board) {
       let sum = 0;
-      // console.table(board);
-      // let board = this.state.current;
       for(let i=-1; i<2; i++) {
         for(let j=-1; j<2; j++) {
-          if(typeof board[x+i] == 'undefined') {
-            sum+=0;
-            console.log(x, i);
-          } else {
-            sum+=(board[x+i][y+j]?1:0);
-          }
+          sum+=(board[(x+i+row)%row][(y+j+col)%col])?1:0;
+          // console.log(board[(x+i+row)%row][(y+j+col)%col])
         }
       }
 
