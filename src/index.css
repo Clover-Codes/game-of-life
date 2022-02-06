@@ -4,22 +4,22 @@
 }
 
 /* cyan red theme */
-:root {
+/* :root {
   --dark-blue: #010A14;
   --light-cyan: #89FDFF;
   --alive: #ff003b;
   --alive-shadow: #ff0f69;
   --butt: #044F59;
-}
+} */
 
 /* green red terminal theme */
-/* :root {
+:root {
   --dark-blue: #000b00;
   --light-cyan: #45ff07;
   --alive: #ff003b;
   --alive-shadow: #ff0f69;
   --butt: #044F59;
-} */
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap');
 
@@ -54,7 +54,8 @@ h1 {
   align-items: center;
   transform: scale(1.3);
   /* width: 50vw; */
-  margin: 50px;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 .alive, .dead {
@@ -92,6 +93,7 @@ h1 {
 
 .stats {
   color: var(--light-cyan, cyan);
+  font-size: 1.3em;
 }
 
 p {

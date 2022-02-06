@@ -7,12 +7,15 @@ import Board from './Board';
     constructor(props) {
       super(props);
       // let size = 20;
-      let row = 16;
-      let col = 55;
+      let row = 10;
+      let col = 10;
       let board = new Array(row);
 
       for(let i=0; i<row; i++) {
-        board[i] = new Array(col).fill(false);
+        board[i] = new Array(col);
+        for(let j=0; j<col; j++) {
+          board[i][j] = false;
+        }
       }
       this.state = {
         current: board,
@@ -25,7 +28,7 @@ import Board from './Board';
     }
 
     componentDidMount = () => {
-      setInterval(this.gameUpdation, 100); // 300ms
+      setInterval(this.gameUpdation, 1000); // 300ms
       // clearInterval(k);
       // this runs but i don't remove this before unmounting
     }
@@ -51,20 +54,22 @@ import Board from './Board';
       // this.gameUpdation();
     }
     
-    lives(x, y, row, col) {
+    lives(x, y, row, col, board) {
       let sum = 0;
-      let board = this.state.current;
+      // console.table(board);
+      // let board = this.state.current;
       for(let i=-1; i<2; i++) {
         for(let j=-1; j<2; j++) {
-          if(x+i>row || x+i<0 || y+j>col || y+j<0) {
+          if(typeof board[x+i] == 'undefined') {
             sum+=0;
+            console.log(x, i);
           } else {
-            sum+=board[x+i][y+j];
+            sum+=(board[x+i][y+j]?1:0);
           }
         }
       }
 
-      sum-=board[x][y];
+      sum-=(board[x][y]?1:0);
 
       // console.log(`sum: ${sum} cell: ${x}, ${y}`);//
       if(board[x][y]) {
@@ -83,6 +88,13 @@ import Board from './Board';
     }
 
     gameUpdation = () => {
+      // console.table(this.state.current);//
+      // console.table(this.state.current[0]);
+      // let k = new Array(this.state.row);
+      // for(let i=0; i<this.state.row; i++) {
+      //   k[i] = this.state.current[i][0];
+      // }
+      // console.table(k);
       // console.log(`the ongoing rn is ${this.state.ongoing}`);
       if(this.state.ongoing===false) {
         return;
@@ -94,24 +106,23 @@ import Board from './Board';
       // here, current somehow updates when i update next, 
       // i need them to be separate so i can get a new generations] all at once, not cell by cell
       this.setState((state) => {
+        // console.log(state.current);//
         let next = new Array(state.row);
         for(let i=0; i<state.row; i++) {
           next[i] = new Array(state.col).fill(false);
         }
-        for(let i=1; i<state.row-1; i++) {
-          for(let j=1; j<state.col-1; j++) {
-            next[i][j] = this.lives(i, j, state.row, state.col);
+        for(let i=0; i<state.row; i++) {
+          for(let j=0; j<state.col; j++) {
+            // console.log(state.col);
+            next[i][j] = this.lives(i, j, state.row, state.col, state.current);
           }
         }
+        // console.log(state.current);//
         return {current: next}
       });
     }
 
     gameReset() {
-
-      // this.gametoggle();
-
-      // this.setState({current: next});
       this.setState((state) => {
         let next = new Array(state.row);
         for(let i=0; i<state.row; i++) {
@@ -126,6 +137,23 @@ import Board from './Board';
 
       this.setState(() => {
         return {ongoing: false}
+      });
+    }
+
+    gameRandom() {
+      this.setState((state) => {
+        let next = new Array(state.row);
+        for(let i=0; i<state.row; i++) {
+          next[i] = new Array(state.col);
+          for(let j=0; j<state.col; j++) {
+            next[i][j] = (Math.random() < 0.2)?true:false;
+          }
+        }
+        return {current: next}
+      });
+
+      this.setState(() => {
+        return {gen: 0}
       });
     }
 
@@ -146,13 +174,18 @@ import Board from './Board';
               >
               <p>{buttonText}</p>
               </div>
+              <div className='game random'
+                onClick={() => this.gameRandom()}
+              >
+              <p>Randomize</p>
+              </div>
               <div className='game reset'
                 onClick={() => this.gameReset()}
               >
               <p>Reset</p>
               </div>
-              <div className='stats gen'><p>Generations: {this.state.gen}</p></div>
             </div>
+            <div className='stats gen'><p>Generations: {this.state.gen}</p></div>
           </div>
           {/* don't write any functions here, because they will be called whenever this whole this is rerendered */}
           {/* {console.log('hi')} */}
