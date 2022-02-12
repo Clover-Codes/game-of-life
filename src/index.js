@@ -7,9 +7,10 @@ import Board from './Board';
     constructor(props) {
       super(props);
       // let size = 20;
-      let row = 16;
-      let col = 50;
+      let row = Math.floor((window.innerHeight - 350)/21);
+      let col = Math.floor((window.innerWidth - 150)/21);
       let board = new Array(row);
+      // let width = window.innerWidth;
 
       for(let i=0; i<row; i++) {
         board[i] = new Array(col);
@@ -24,16 +25,32 @@ import Board from './Board';
         row: row,
         col: col,
         gen: 0,
+        // WindowSize : width,
       };
+      this.handleResize = this.handleResize.bind(this);
     }
 
     componentDidMount = () => {
       setInterval(this.gameUpdation, 100); // 300ms
       // clearInterval(k);
       // this runs but i don't remove this before unmounting
+      window.addEventListener("resize", this.handleResize);
     }
-
-
+    componentWillUnmount() {
+      window.addEventListener("resize", null);
+    }
+    handleResize(WindowSize, event) {
+        // this.setState({WindowSize: window.innerWidth})
+        // this.setState({col: Math.floor((window.innerWidth - 150)/21)}) // not instant
+        this.setState((state) => {
+          return {col: Math.floor((window.innerWidth - 150)/21)} // you gotta see how many pixels because different dispays have different resolution
+        });
+        // this.setState({row: Math.floor((window.innerHeight - 350)/21)})
+        this.setState((state) => {
+          return {row: Math.floor((window.innerHeight - 350)/21)}
+        });
+        this.gameReset();
+    }
 
     handleClick(i, j) {
       // let toggle = this.state.current;
@@ -158,31 +175,28 @@ import Board from './Board';
     render() {
       let buttonText = this.state.ongoing? 'Pause' : 'Start';
       return (
-        <div>
+        <div className="main-game">
           <h1>Game of Life</h1>
-          <div className="main-game">
-            <Board row={this.state.row} col={this.state.col} board={this.state.current} onClick = {(i, j) => this.handleClick(i, j)}/>
-            <div className="controls">
-              <div className='game toggle'
-                onClick={() => this.gametoggle()}
-              >
-              <p>{buttonText}</p>
-              </div>
-              <div className='game random'
-                onClick={() => this.gameRandom()}
-              >
-              <p>Randomize</p>
-              </div>
-              <div className='game reset'
-                onClick={() => this.gameReset()}
-              >
-              <p>Reset</p>
-              </div>
+          {/* <h2>Width: {this.state.WindowSize} </h2> */}
+          <Board row={this.state.row} col={this.state.col} board={this.state.current} onClick = {(i, j) => this.handleClick(i, j)}/>
+          <div className="controls">
+            <div className='game toggle'
+              onClick={() => this.gametoggle()}
+            >
+            <p>{buttonText}</p>
             </div>
-            <div className='stats gen'><p>Generations: {this.state.gen}</p></div>
+            <div className='game random'
+              onClick={() => this.gameRandom()}
+            >
+            <p>Randomize</p>
+            </div>
+            <div className='game reset'
+              onClick={() => this.gameReset()}
+            >
+            <p>Reset</p>
+            </div>
           </div>
-          {/* don't write any functions here, because they will be called whenever this whole this is rerendered */}
-          {/* {console.log('hi')} */}
+          <div className='stats gen'><p>Generation: {this.state.gen}</p></div>
         </div>
       );
     }

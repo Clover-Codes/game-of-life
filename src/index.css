@@ -8,7 +8,6 @@
   --dark-blue: #010A14;
   --light-cyan: #89FDFF;
   --alive: #ff003b;
-  --alive-shadow: #ff0f69;
   --butt: #044F59;
 } */
 
@@ -17,8 +16,7 @@
   --dark-blue: #000b00;
   --light-cyan: #45ff07;
   --alive: #ff003b;
-  --alive-shadow: #ff0f69;
-  --butt: #044F59;
+  --butt: #045924;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap');
@@ -26,6 +24,7 @@
 body {
   background: var(--dark-blue, black);
   font-family: 'Roboto Mono', monospace;
+  color: white;
 }
 
 h1 {
@@ -61,27 +60,30 @@ h1 {
 .alive, .dead {
   margin: 0 2px;
   display: inline-block;
-  height: 17px;
-  width: 17px;
 }
 
 .alive {
   background: var(--alive, yellow);
-  border: 1px solid var(--alive, yellow);
-  box-shadow: 0 0 4px var(--alive-shadow, yellow);
+  height: 19px;
+  width: 19px;
+  /* border: 1px solid var(--alive, yellow); */
+  box-shadow: 0 0 4px var(--alive, yellow);
 }
 
 .dead {
+  height: 17px;
+  width: 17px;
   background: transparent;
   border: 1px solid gray;
 }
 
+//fix the flex directipn adn button size on phones
 .game {
   border: 3px solid var(--light-cyan, cyan);
   border-radius: 15px;
   background: white;
   transition: all 100ms ease 0s;
-  color: var(--butt, cyan);
+  color: var(--butt, teal);
   margin: 5px;
   cursor: pointer;
 }
