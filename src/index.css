@@ -77,7 +77,6 @@ h1 {
   border: 1px solid gray;
 }
 
-//fix the flex directipn adn button size on phones
 .game {
   border: 3px solid var(--light-cyan, cyan);
   border-radius: 15px;
