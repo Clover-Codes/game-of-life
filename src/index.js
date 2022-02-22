@@ -7,7 +7,7 @@ import Board from './Board';
     constructor(props) {
       super(props);
       // let size = 20;
-      let row = Math.floor((window.innerHeight - 350)/21);
+      let row = Math.floor((window.innerHeight - 275)/21);
       let col = Math.floor((window.innerWidth - 150)/21);
       let board = new Array(row);
       // let width = window.innerWidth;
