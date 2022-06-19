@@ -1,6 +1,6 @@
 {
   "name": "game-of-life",
-  "homepage": "https://clover-codes.github.io/game-of-life/",
+  "homepage": "https://game-of-life-with-react.vercel.app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
