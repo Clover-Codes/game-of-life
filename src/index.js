@@ -27,29 +27,11 @@ import Board from './Board';
         gen: 0,
         // WindowSize : width,
       };
-      this.handleResize = this.handleResize.bind(this);
     }
 
     componentDidMount = () => {
       setInterval(this.gameUpdation, 100); // 300ms
       // clearInterval(k);
-      // this runs but i don't remove this before unmounting
-      window.addEventListener("resize", this.handleResize);
-    }
-    componentWillUnmount() {
-      window.addEventListener("resize", null);
-    }
-    handleResize(WindowSize, event) {
-        // this.setState({WindowSize: window.innerWidth})
-        // this.setState({col: Math.floor((window.innerWidth - 150)/21)}) // not instant
-        this.setState((state) => {
-          return {col: Math.floor((window.innerWidth - 150)/21)} // you gotta see how many pixels because different dispays have different resolution
-        });
-        // this.setState({row: Math.floor((window.innerHeight - 350)/21)})
-        this.setState((state) => {
-          return {row: Math.floor((window.innerHeight - 350)/21)}
-        });
-        this.gameReset();
     }
 
     handleClick(i, j) {
